@@ -5,13 +5,8 @@ var Stack = function() {
   var obj = {};
   obj.storage = {};
 
-  // obj.push = stackMethods.push;
-  // obj.pop = stackMethods.pop;
-  // obj.size = stackMethods.size;
-
   extend(obj, stackMethods);
  
-  // debugger;
   return obj;
 };
 
@@ -38,11 +33,9 @@ stackMethods.size = function() {
 
 
 var extend = function(destination, source) {
-
   for (key in source) {
     destination[key] = source[key];
   }
 
   return destination;
 };
-
