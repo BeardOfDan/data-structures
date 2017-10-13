@@ -14,6 +14,7 @@ var DoublyLinkedList = function() {
       this.tail = node; 
     } else {
       this.tail.next = node;
+      node.prev = this.tail;
       this.tail = this.tail.next;
     }
   };
@@ -21,6 +22,7 @@ var DoublyLinkedList = function() {
   list.removeHead = function() {
     var result = this.head;
     this.head = this.head.next;
+    this.head.prev = null;
     return result.value;
   };
 
@@ -40,19 +42,27 @@ var DoublyLinkedList = function() {
 
 
   // -----------------------------------
-
+  // --------- new methods -------------
+  // -----------------------------------
 
   // An .addToHead() method which takes a value and adds it to the front of the list.
   list.addToHead = function(value) {
-
+    let node = Node(value);
+    
+    this.head.prev = node;
+    node.next = this.head; 
+    this.head = node;
   };
 
 
   // A .removeTail() method which removes the last node from the list and returns its value.
   list.removeTail = function() {
+    let newLastNode = this.tail.prev;
     
+    newLastNode.next = null;
+    this.tail.prev = null;
+    this.tail = newLastNode;
   };
-
 
 
   return list;
