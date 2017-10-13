@@ -21,8 +21,15 @@ var DoublyLinkedList = function() {
 
   list.removeHead = function() {
     var result = this.head;
-    this.head = this.head.next;
-    this.head.prev = null;
+
+    if (result !== null) {
+      this.head = this.head.next;
+      
+      if (this.head !== null) {
+        this.head.prev = null;
+      }
+    }
+    
     return result.value;
   };
 
@@ -78,7 +85,4 @@ var Node = function(value) {
 
   return node;
 };
-
-// Note: each node object will need to have a new .previous property pointing to the node behind it (or to null when appropriate); 
-// this is what makes it a doubly-linked list
 
