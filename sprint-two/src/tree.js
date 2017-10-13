@@ -4,7 +4,7 @@ var Tree = function(value) {
 
   newTree.children = []; 
 
-  extend(newTree, treeMethods);
+  _.extend(newTree, treeMethods); // using jQuery
   
   return newTree;
 };
@@ -12,7 +12,7 @@ var Tree = function(value) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
-  let child = new Child(value);
+  let child = Tree(value);
   this.children.push(child);
 };
 
@@ -33,21 +33,6 @@ treeMethods.contains = function(target) {
   return false;
 };
 
-var Child = function(value) {
-  let obj = {};
-  obj.value = value;
-  obj.children = [];
-
-  extend(obj, treeMethods);
-
-  return obj;
-};
-
-var extend = function(destination, source) {
-  for (key in source) {
-    destination[key] = source[key];
-  }
-};
 
 /*
  * Complexity: What is the time complexity of the above functions?
