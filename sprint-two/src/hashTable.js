@@ -7,7 +7,34 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  var count = 0;
+  
+  let size = Object.keys(this._storage).length;
 
+  for (let key in this._storage) {
+    if (this._storage[key] !== undefined) {
+      count++;
+    }
+  }
+
+  if (count === (this._limit * .75)) {
+    var oldStorage = this._storage;
+    this._storage = LimitedArray(this._limit * 2);
+    this._limit *= 2;
+
+    //populate new storage
+    for (let key in oldStorage) { 
+      var bucket = oldStorage[key];
+  
+      for (var i = 0; i < bucket.length; i++) {
+        var tuple = bucket[i];
+        if (tuple !== undefined) {
+          this.insert(tuple[0], tuple[1]);              
+        }
+      }
+    }
+  }
+  
   if (this._storage[index] === undefined) {
     this._storage[index] = [[k, v]];
   } else {
@@ -53,6 +80,11 @@ HashTable.prototype.remove = function(k) {
     }
   }
 };
+
+
+// To prevent excessive collisions, make your hashTable double in size as soon as 75 percent of the spaces have been filled
+// To save space, make sure the hashTable halves in size when space usage falls below 25 percent
+
 
 
 /*
