@@ -2,7 +2,8 @@ var Tree = function(value) {
   var newTree = {};
   newTree.value = value;
 
-  newTree.children = []; 
+  newTree.children = [];
+  newTree.parent = null; 
 
   _.extend(newTree, treeMethods); // using jQuery
   
@@ -14,6 +15,7 @@ var treeMethods = {};
 treeMethods.addChild = function(value) {
   let child = Tree(value);
   this.children.push(child);
+  child.parent = this;
 };
 
 treeMethods.contains = function(target) {
@@ -29,14 +31,23 @@ treeMethods.contains = function(target) {
       }
     }
   }
-
   return false;
+};
+
+treeMethods.removeFromParent = function() {
+  if (this.parent !== null) {
+    var parent = this.parent;
+    var index = parent.children.indexOf(this);
+    parent.children = parent.children.slice(0, index).concat(parent.children.slice(index + 1));
+    this.parent = null;
+  }
+  return this;
 };
 
 
 /*
  * Complexity: What is the time complexity of the above functions?
-  addChild : O(1) - constanct
-
+  addChild : O(1) - constant
   contains : O(n) - linear
+  removeFromParent : constant
  */
