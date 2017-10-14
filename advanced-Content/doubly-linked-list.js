@@ -64,11 +64,18 @@ var DoublyLinkedList = function() {
 
   // A .removeTail() method which removes the last node from the list and returns its value.
   list.removeTail = function() {
-    let newLastNode = this.tail.prev;
+    const newLastNode = this.tail.prev;
+    const result = this.tail.value;
     
-    newLastNode.next = null;
-    this.tail.prev = null;
-    this.tail = newLastNode;
+    if (newLastNode !== null) {
+      newLastNode.next = null;
+      this.tail = newLastNode;
+    } else { // the list is empty
+      this.head = null;
+      this.tail = null;
+    }
+
+    return result;
   };
 
 
