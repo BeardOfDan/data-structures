@@ -56,9 +56,15 @@ var DoublyLinkedList = function() {
   list.addToHead = function(value) {
     let node = Node(value);
     
-    this.head.prev = node;
-    node.next = this.head; 
-    this.head = node;
+    if (this.head !== null) {
+      this.head.prev = node;
+      node.next = this.head; 
+      this.head = node;
+    } else { // the list is empty
+      this.head = node;
+      this.tail = node;
+    }
+
   };
 
 
