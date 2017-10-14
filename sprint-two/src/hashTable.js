@@ -74,11 +74,13 @@ HashTable.prototype.remove = function(k) {
 
   const bucket = this._storage[index];
 
-  for (let i = 0; i < bucket.length; i++) {
-    const tuple = bucket[i];
+  if (bucket !== undefined) {
+    for (let i = 0; i < bucket.length; i++) {
+      const tuple = bucket[i];
 
-    if (tuple[0] === k) {
-      this._storage[index] = bucket.slice(0, i).concat(bucket.slice(i + 1));
+      if (tuple[0] === k) {
+        this._storage[index] = bucket.slice(0, i).concat(bucket.slice(i + 1));
+      }
     }
   }
 
