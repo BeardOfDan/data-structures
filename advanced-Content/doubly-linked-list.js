@@ -20,17 +20,19 @@ var DoublyLinkedList = function() {
   };
 
   list.removeHead = function() {
-    var result = this.head;
+    if ((this.head !== null) && (this.tail !== null)) {
+      var result = this.head.value;
 
-    if (result !== null) {
-      this.head = this.head.next;
-      
       if (this.head !== null) {
-        this.head.prev = null;
+        this.head = this.head.next;
+        
+        if (this.head !== null) {
+          this.head.prev = null;
+        }
       }
+      
+      return result;
     }
-    
-    return result.value;
   };
 
 
@@ -70,18 +72,20 @@ var DoublyLinkedList = function() {
 
   // A .removeTail() method which removes the last node from the list and returns its value.
   list.removeTail = function() {
-    const newLastNode = this.tail.prev;
-    const result = this.tail.value;
-    
-    if (newLastNode !== null) {
-      newLastNode.next = null;
-      this.tail = newLastNode;
-    } else { // the list only has 1 element
-      this.head = null;
-      this.tail = null;
-    }
+    if ((this.head !== null) && (this.tail !== null)) {
+      const newLastNode = this.tail.prev;
+      const result = this.tail.value;
+      
+      if (newLastNode !== null) {
+        newLastNode.next = null;
+        this.tail = newLastNode;
+      } else { // the list only has 1 element
+        this.head = null;
+        this.tail = null;
+      }
 
-    return result;
+      return result;
+    }
   };
 
 
