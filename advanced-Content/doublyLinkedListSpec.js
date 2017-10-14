@@ -71,10 +71,9 @@ describe('doublyLinkedList', function() {
     expect(doublyLinkedList.contains(4)).to.equal(false);
   }); 
 
-  it('should not throw an erro when removing from an empty list', function() {
+  it('should not throw an error when removing from an empty list', function() {
     expect(doublyLinkedList.removeTail()).to.equal(undefined);
     expect(doublyLinkedList.removeHead()).to.equal(undefined);
-
   });
 
 });
