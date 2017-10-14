@@ -54,44 +54,22 @@ describe('doublyLinkedList', function() {
     expect(doublyLinkedList.contains(4)).to.equal(false);
   });
 
-  it('should add to the head from the list when addToHead is called', function() {
-    doublyLinkedList.addToTail(5);
-    doublyLinkedList.addToTail(6);
+  it('should add to the head of the list when addToHead is called', function() {
     doublyLinkedList.addToHead(4);
     expect(doublyLinkedList.contains(4)).to.equal(true);
     expect(doublyLinkedList.removeHead()).to.equal(4);
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  it('should remove the tail when removeTail is called', function() {
+    doublyLinkedList.addToTail(4);
+    doublyLinkedList.addToTail(5);
+    expect(doublyLinkedList.contains(5)).to.equal(true);
+    expect(doublyLinkedList.contains(4)).to.equal(true);
+    expect(doublyLinkedList.removeTail()).to.equal(5);
+    expect(doublyLinkedList.contains(5)).to.equal(false);
+    expect(doublyLinkedList.removeTail()).to.equal(4);
+    expect(doublyLinkedList.contains(4)).to.equal(false);
+  }); 
 
 
 });
