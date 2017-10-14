@@ -47,9 +47,20 @@ describe('doublyLinkedList', function() {
     expect(doublyLinkedList.contains(6)).to.equal(false);
   });
 
+  it('should not contain a value that was removed', function() {
+    doublyLinkedList.addToTail(4);
+    doublyLinkedList.addToTail(5);
+    doublyLinkedList.removeHead();
+    expect(doublyLinkedList.contains(4)).to.equal(false);
+  });
 
-
-
+  it('should add to the head from the list when addToHead is called', function() {
+    doublyLinkedList.addToTail(5);
+    doublyLinkedList.addToTail(6);
+    doublyLinkedList.addToHead(4);
+    expect(doublyLinkedList.contains(4)).to.equal(true);
+    expect(doublyLinkedList.removeHead()).to.equal(4);
+  });
 
 
 
