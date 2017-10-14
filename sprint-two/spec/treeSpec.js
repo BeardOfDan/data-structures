@@ -41,4 +41,37 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
 
+  // tests for new functionality
+
+  it('should have a parent property with the correct value', function() {
+    expect(tree.parent).to.equal(null);
+    tree.addChild(1);
+    expect(tree.children[0].parent).to.equal(tree);
+    tree.children[0].addChild(2);
+    expect(tree.children[0].children[0].parent).to.equal(tree.children[0]);
+  });
+
+  it('should dissasociate the parent with the child in both directions when removeFromParent is called', function() {
+    tree.addChild(1);
+    tree.addChild(2);
+    tree.children[0].addChild(3);
+    let child = tree.children[0].removeFromParent();
+    expect(child.parent).to.equal(null);
+    expect(tree.children[0].value).to.equal(2);
+    expect(child.children[0].parent).to.equal(child);
+  });
+
+  it('should not throw an error when removeFromParent is called on a tree with 1 or 0 nodes', function() {
+    // 0 values
+    let current = tree.removeFromParent();
+    expect(tree.parent).to.equal(null);
+    expect(tree.children).to.eql([]);
+
+    // 1 value
+    tree.addChild(1);
+    expect(tree.parent).to.equal(null);
+    current = tree.children[0].removeFromParent();
+    expect(current.parent).to.equal(null);
+  });
+
 });
