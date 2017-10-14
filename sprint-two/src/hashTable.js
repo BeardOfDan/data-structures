@@ -58,10 +58,12 @@ HashTable.prototype.retrieve = function(k) {
   
   const bucket = this._storage[index];
 
-  for (let i = 0; i < bucket.length; i++) {
-    let tuple = bucket[i];
-    if (tuple[0] === k) {
-      return tuple[1];
+  if (bucket !== undefined) {
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === k) {
+        return tuple[1];
+      }
     }
   }
 };
@@ -79,6 +81,36 @@ HashTable.prototype.remove = function(k) {
       this._storage[index] = bucket.slice(0, i).concat(bucket.slice(i + 1));
     }
   }
+
+  // -----------------------------------------
+  // if it is too small, shrink the hash table
+  // -----------------------------------------
+
+  // get the size of the hash table
+  let size = 0;
+  this._storage.each(function(value, index, collection) {
+    if (value !== undefined) {
+      size++;
+    }
+  });
+
+  // check if it is too small
+  if ((size <= (this._limit / 4)) && (this._limit >= 8)) {
+    // shrink the hash table
+
+    const oldStorage = this._storage;
+    this._storage = LimitedArray(this._limit / 2);
+
+    // update the size of limit
+    this._limit /= 2;
+
+    // iterate through oldStorage and add it to the current hash table
+    oldStorage.each(function(value, index, collection) {
+      const tuple = value;
+      this._storage.insert(...tuple);
+    });
+  }
+
 };
 
 
